@@ -32,19 +32,24 @@ class Game {
   }
 
   drawSnake() {
-    this.snake.forEach((cell) => {
-      this.ctx.fillStyle = "rgba(67, 217, 173)";
+    const path = d3.path();
 
-      this.ctx.beginPath();
-      this.ctx.arc(
-        cell.x * this.cellSize + this.cellSize / 2,
-        cell.y * this.cellSize + this.cellSize / 2,
-        this.cellSize / 2,
-        0,
-        2 * Math.PI
+    path.moveTo(
+      this.snake[0].x * this.cellSize + 4,
+      this.snake[0].y * this.cellSize + 4
+    );
+    for (let i = 1; i < this.snake.length; i++) {
+      path.lineTo(
+        this.snake[i].x * this.cellSize + 4,
+        this.snake[i].y * this.cellSize + 4
       );
-      this.ctx.fill();
-    });
+    }
+    this.ctx.strokeStyle = "rgba(67, 217, 173)";
+    this.ctx.lineWidth = this.cellSize;
+    this.ctx.lineCap = "round";
+    this.ctx.lineJoin = "round";
+    const path2d = new Path2D(path.toString());
+    this.ctx.stroke(path2d);
   }
 
   drawFood() {
@@ -92,6 +97,8 @@ class Game {
   }
 
   move() {
+    // to move the snake smoothly using d3 path and dash array and offset we need to
+
     const head = this.snake[0];
     let newHead;
     switch (this.direction) {
@@ -243,7 +250,6 @@ class Game {
   }
 
   init() {
-    this.draw();
     this.bindEvents();
     return this;
   }
@@ -417,22 +423,99 @@ class Snake {
   }
 }
 
+const game = ref({ score: 0, isGameOver: false });
+const gameStarted = ref(false);
+const availableFood = ref(10);
+
 onMounted(() => {
   const canvas = canvasRef.value;
-  // set height and width and background color to #011627
-  canvas.width = 240;
-  canvas.height = 408;
-  canvas.style.backgroundColor = "#011627";
 
-  const game = new Game(canvas);
-  game.init();
-  game.start();
+  game.value = new Game(canvas);
+  game.value.init();
 });
+
+// watch game.value.score and update availableFood - 1 when score changes
+watch(
+  () => game.value.score,
+  (score) => {
+    availableFood.value = 10 - score;
+  }
+);
+
+function startGame() {
+  gameStarted.value = true;
+  game.value.start();
+}
+
+function restartGame() {
+  gameStarted.value = false;
+  game.value.stop();
+}
 </script>
 
 <template>
   <canvas
     class="absolute left-[31px] top-[36px] rounded-lg"
     ref="canvasRef"
+    width="240"
+    height="408"
+    style="background-color: #011627"
   ></canvas>
+  <div
+    v-if="!gameStarted"
+    class="absolute bottom-[90px] left-[93px] flex flex-col items-center"
+  >
+    <svg
+      width="67"
+      height="197"
+      viewBox="0 0 67 197"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.8271 39.3883V114.388H62.8271V193"
+        stroke="url(#paint0_linear_0_1)"
+        stroke-width="8"
+        stroke-linecap="round"
+      />
+      <circle
+        opacity="0.1"
+        cx="10.827"
+        cy="11.2725"
+        r="10.3456"
+        fill="#43D9AD"
+      />
+      <circle
+        opacity="0.2"
+        cx="10.827"
+        cy="11.2725"
+        r="7.34558"
+        fill="#43D9AD"
+      />
+      <circle cx="10.8271" cy="11.2725" r="4" fill="#43D9AD" />
+      <defs>
+        <linearGradient
+          id="paint0_linear_0_1"
+          x1="10.8271"
+          y1="48.3883"
+          x2="73.9999"
+          y2="167"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#43D9AD" />
+          <stop offset="1" stop-color="#43D9AD" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <v-button @click="startGame" class="mt-16" type="primary"
+      >start-game</v-button
+    >
+  </div>
+  <div class="absolute right-16 top-1/2 grid grid-cols-5 gap-[23px]">
+    <span
+      v-for="(item, index) in Array(availableFood)"
+      :key="index"
+      class="food | h-2 w-2 block bg-accent-green-cyan rounded-full"
+    ></span>
+  </div>
 </template>

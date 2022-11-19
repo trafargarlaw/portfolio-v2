@@ -8,3 +8,7 @@ body,
 html {
   height: 100%;
 }
+
+.food {
+  box-shadow: 0 0 0 4px #43d9ad40, 0 0 0 8px #43d9ad10;
+}
