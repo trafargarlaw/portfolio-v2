@@ -26,7 +26,9 @@
     </div>
     <div class="relative">
       <div class="">
-        <snake-game />
+        <client-only>
+          <snake-game-two />
+        </client-only>
         <svg
           class="z-40"
           width="512"
