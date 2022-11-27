@@ -14,8 +14,10 @@ defineProps({
 </script>
 
 <template>
-  <li v-if="type === 'default'" class="px-8 py-4 border-r border-lines">
-    <nuxt-link :to="to"><slot /></nuxt-link>
+  <li v-if="type === 'default'" class="flex">
+    <nuxt-link class="px-8 py-4 border-r border-lines" :to="to"
+      ><slot
+    /></nuxt-link>
   </li>
   <div
     v-else-if="type === 'left'"
