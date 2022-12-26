@@ -1,4 +1,123 @@
-<script setup></script>
+<script setup>
+const router = useRouter();
+
+const filesData = {
+  personal: {
+    fileName: "personal-info",
+    content: [
+      {
+        folderName: "bio",
+        folderColor: "fill-accent-orange-red",
+        files: [
+          {
+            fileName: "biography",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+      {
+        folderName: "interests",
+        folderColor: "fill-accent-green-cyan",
+        files: [
+          {
+            fileName: "biography",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+      {
+        folderName: "education",
+        folderColor: "fill-accent-indigo",
+        files: [
+          {
+            fileName: "biography",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+    ],
+  },
+
+  professional: {
+    fileName: "professional-info",
+    content: [
+      {
+        folderName: "experience",
+        folderColor: "fill-accent-orange-red",
+        files: [
+          {
+            fileName: "experience",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+
+      {
+        folderName: "skills",
+        folderColor: "fill-accent-green-cyan",
+        files: [
+          {
+            fileName: "skills",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+
+      {
+        folderName: "projects",
+        folderColor: "fill-accent-indigo",
+        files: [
+          {
+            fileName: "certificates",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+    ],
+  },
+  hobbies: {
+    fileName: "hobbies",
+    content: [
+      {
+        folderName: "music",
+        folderColor: "fill-accent-orange-red",
+        files: [
+          {
+            fileName: "music",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+
+      {
+        folderName: "books",
+        folderColor: "fill-accent-green-cyan",
+        files: [
+          {
+            fileName: "books",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+
+      {
+        folderName: "games",
+        folderColor: "fill-accent-indigo",
+        files: [
+          {
+            fileName: "games",
+            icon: resolveComponent("icons-markdown"),
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const currentFilesData = computed(() => {
+  return filesData[router.currentRoute.value.fullPath.split("/")[2]];
+});
+</script>
 <template>
   <div class="border-r border-lines">
     <button
@@ -16,13 +135,19 @@
           fill="white"
         />
       </svg>
-      personal-info
+      {{ currentFilesData.fileName }}
     </button>
-    <div class="flex flex-col px-4 pt-3">
-      <about-file folderColor="fill-accent-orange-red">bio</about-file>
-      <about-file folderColor="fill-accent-green-cyan">interests</about-file>
-      <about-file folderColor="fill-[#3A49A4]">education</about-file>
+    <div class="flex flex-col px-4 py-3">
+      <about-file
+        v-for="folder in currentFilesData.content"
+        :key="folder.folderName"
+        :folderColor="folder.folderColor"
+        :files="folder.files"
+      >
+        {{ folder.folderName }}
+      </about-file>
     </div>
+
     <button
       class="text-white flex items-center gap-2 px-[14px] py-2 border-t border-b border-lines w-full"
     >
@@ -42,10 +167,10 @@
     </button>
     <div class="flex flex-col pl-4 pr-[11px] pt-3 gap-2">
       <div class="flex text-sm items-center text-secondary-blue-gray gap-2">
-        <icons-mail /> <span>chergaoui@houdaifa.com</span>
+        <icons-mail /> <span>hudy@hudy.com</span>
       </div>
       <div class="flex text-sm items-center text-secondary-blue-gray gap-2">
-        <icons-phone /> <span>+212 611750977</span>
+        <icons-phone /> <span>+212 610000000</span>
       </div>
     </div>
   </div>

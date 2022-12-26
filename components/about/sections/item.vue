@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   icon: {
-    type: String,
+    type: Object,
     required: true,
   },
   to: {
@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
   <li class="px-6 py-4">
-    <nuxt-link :to="to">
+    <nuxt-link class="section-item-link opacity-40" :to="to">
       <component :is="icon"></component>
     </nuxt-link>
   </li>

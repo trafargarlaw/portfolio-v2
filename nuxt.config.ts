@@ -7,6 +7,14 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: ["@nuxt/content"],
+  content: {
+    highlight: {
+      theme: "github-dark",
+      preload: ["ts"],
+    },
+    documentDriven: true,
+  },
   vite: {
     server: {
       watch: {

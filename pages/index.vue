@@ -4,7 +4,9 @@
   >
     <div>
       <h2 class="text-lg text-[#E5E9F0] font-retina">Hi all. I am</h2>
-      <h1 class="text-[50px] text-[#E5E9F0] font-retina">Houdaifa Chergaoui</h1>
+      <h1 class="text-[50px] text-[#E5E9F0] font-retina">
+        Absolutely Not Hudy
+      </h1>
       <h3 class="text-secondary-blue-violet font-retina text-[32px]">
         > Front-end developer
       </h3>

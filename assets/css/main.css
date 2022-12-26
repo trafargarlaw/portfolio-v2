@@ -24,6 +24,10 @@ html {
   height: 100%;
 }
 
-.router-link-active {
+.router-link-active.page-route {
   border-bottom: 3px solid #fea55f;
+}
+
+.router-link-active.section-item-link {
+  @apply opacity-100;
 }

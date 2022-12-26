@@ -15,7 +15,7 @@ defineProps({
 
 <template>
   <li v-if="type === 'default'" class="flex">
-    <nuxt-link class="px-8 py-4 border-r border-lines" :to="to"
+    <nuxt-link class="px-8 py-4 border-r border-lines page-route" :to="to"
       ><slot
     /></nuxt-link>
   </li>
@@ -23,6 +23,6 @@ defineProps({
     v-else-if="type === 'left'"
     class="px-[22px] py-4 border-l ml-auto border-lines"
   >
-    <nuxt-link :to="to">_contact-me</nuxt-link>
+    <nuxt-link :to="to"><slot /></nuxt-link>
   </div>
 </template>

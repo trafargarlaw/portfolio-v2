@@ -1,7 +1,7 @@
 <template>
   <nav class="flex text-secondary-blue-gray border-b border-lines">
     <span class="pl-[22px] pr-[113px] py-[14px] border-r border-lines"
-      >houdaifa-chergaoui</span
+      >hudy-hudy</span
     >
     <ul class="flex">
       <v-header-item to="/">_hello</v-header-item>

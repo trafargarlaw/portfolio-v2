@@ -4,23 +4,18 @@ defineProps({
     type: String,
     required: true,
   },
+  files: {
+    type: Array,
+    required: true,
+  },
 });
+
+const isOpen = ref(false);
 </script>
 
 <template>
-  <button class="flex items-center gap-3 py-1">
-    <svg
-      width="9"
-      height="14"
-      viewBox="0 0 9 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M5.69658 7.18971L0.746582 2.23971L2.16058 0.82571L8.52458 7.18971L2.16058 13.5537L0.746582 12.1397L5.69658 7.18971Z"
-        fill="#607B96"
-      />
-    </svg>
+  <button @click="isOpen = !isOpen" class="flex items-center gap-3 py-1">
+    <icons-chevron-right class="transition" :class="isOpen && 'rotate-90'" />
     <div class="flex items-center gap-2">
       <icons-file :class="folderColor" />
       <span class="text-secondary-blue-gray">
@@ -28,4 +23,16 @@ defineProps({
       </span>
     </div>
   </button>
+  <ul class="px-5" v-if="isOpen">
+    <li
+      class="flex gap-2 items-center text-secondary-blue-gray"
+      v-for="file in files"
+      :key="file.fileName"
+    >
+      <component :is="file.icon"></component>
+      <nuxt-link :to="`personal/${file.fileName}`">{{
+        file.fileName
+      }}</nuxt-link>
+    </li>
+  </ul>
 </template>
